@@ -14,15 +14,16 @@
         <!-- Current Weather Section -->
         <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
             <div>
-                <h1 class="text-3xl font-bold">{{ $currentWeather['location']['name'] }}</h1>
-                <p class="text-xl text-gray-600">{{ $currentWeather['location']['region'] }},
+                <h1 class="text-3xl font-bold">{{ $currentLocation['name'] }}</h1>
+                <p class="text-xl text-gray-600">{{ $currentLocation['region'] }},
                     {{ $currentWeather['location']['country'] }}</p>
-                <p class="text-5xl font-semibold mt-4">{{ $currentWeather['current']['temp_c'] }}°C</p>
-                <p class="text-lg text-gray-600">{{ $currentWeather['current']['condition']['text'] }}</p>
+                <p class="text-5xl font-semibold mt-4">{{ $currentWeather['temp_c'] }}°C</p>
+                <p class="text-lg text-gray-600">{{ $currentWeather['condition_text'] }}</p>
             </div>
             <div>
-                <img src="https:{{ $currentWeather['current']['condition']['icon'] }}" alt="Weather Icon" class="w-32 h-32">
+                <img src="https:{{ $currentWeather['condition_icon'] }}" alt="Weather Icon" class="w-32 h-32">
             </div>
+
         </div>
 
         <!-- 7-Day Forecast Section -->

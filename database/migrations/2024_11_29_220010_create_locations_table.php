@@ -16,9 +16,46 @@ return new class extends Migration {
             $table->string('name');
             $table->string('region')->nullable();
             $table->string('country');
-            $table->string('localtime');
             $table->timestamps();
         });
+        // Seed the locations table with some initial data
+        DB::table('locations')->insert([
+            [
+                'name' => 'Odense',
+                'region' => 'Syddanmark',
+                'country' => 'Denmark',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Copenhagen',
+                'region' => 'Hovedstaden',
+                'country' => 'Denmark',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Aarhus',
+                'region' => 'Midtjylland',
+                'country' => 'Denmark',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Aalborg',
+                'region' => 'Nordjylland',
+                'country' => 'Denmark',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Esbjerg',
+                'region' => 'Syddanmark',
+                'country' => 'Denmark',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 
 

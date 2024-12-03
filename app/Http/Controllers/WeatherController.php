@@ -3,56 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Services\WeatherApiService;
+use App\Services\WeatherService;
 use Illuminate\Http\Request;
 
-/*
 class WeatherController extends Controller
 {
     protected $weatherApiService;
-
-    public function __construct(WeatherApiService $weatherApiService)
-    {
-        $this->weatherApiService = $weatherApiService;
-    }
-
-    public function show($city)
-    {
-        $weatherData = $this->weatherApiService->getCurrentWeather($city);
-
-        if (!$weatherData) {
-            return redirect()->route('weather.show', ['city' => 'Copenhagen'])->with('error', 'Unable to fetch weather data.');
-        }
-
-        return view('weather.show', compact('weatherData'));
-    }
-}
-*/
-class WeatherController extends Controller
-{
     protected $weatherService;
 
-    public function __construct(WeatherApiService $weatherService)
+    public function __construct(WeatherApiService $weatherApiService, WeatherService $weatherService)
     {
+        $this->weatherApiService = $weatherApiService;
         $this->weatherService = $weatherService;
     }
 
     public function show($city)
     {
-        $currentWeather = $this->weatherService->getCurrentWeather($city);
-        $forecastData = $this->weatherService->getForecast($city, 7);
+        $currentWeather = $this->weatherService->getLatestWeatherReadingFromDatabase($city);
+        $currentLocation = $this->weatherService->getLocationFromDatabase($city);
+        $forecastData = $this->weatherApiService->getForecast($city, 7);
 
         if (!$currentWeather || !$forecastData) {
             return redirect()->route('weather.show', ['city' => 'Copenhagen'])
                 ->with('error', 'Unable to fetch weather data.');
         }
 
-        return view('weather.show', compact('currentWeather', 'forecastData'));
+        return view('weather.show', compact('currentWeather', 'forecastData', 'currentLocation'));
 
     }
 
     public function showDay($city, $date)
     {
-        $forecastData = $this->weatherService->getForecast($city, 7);
+        $forecastData = $this->weatherApiService->getForecast($city, 7);
 
         if (!$forecastData) {
             return redirect()->route('weather.show', ['city' => $city])->with('error', 'Unable to fetch weather data.');
@@ -65,8 +47,6 @@ class WeatherController extends Controller
         }
         //dd($selectedDay);
         return view('weather.day', compact('forecastData', 'selectedDay', 'city'));
-
-
     }
 }
 

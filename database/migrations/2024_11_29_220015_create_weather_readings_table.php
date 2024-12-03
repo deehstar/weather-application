@@ -14,11 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('location_id')->constrained('locations')->cascadeOnDelete();
             $table->float('temp_c');
-            $table->string('condition_text');
-            $table->string('condition_icon');
-            $table->float('wind_kph');
-            $table->string('wind_dir');
-            $table->string('last_updated');
+            $table->string('condition_text')->nullable();
+            $table->string('condition_icon')->nullable();
+            $table->float('wind_kph')->nullable();
+            $table->string('wind_dir')->nullable();
+            $table->string('last_updated')->nullable();
             $table->timestamps();
         });
     }
