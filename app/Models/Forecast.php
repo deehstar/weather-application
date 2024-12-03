@@ -14,4 +14,8 @@ class Forecast extends Model
         'chance_of_rain',
         'feelslike_c',
     ];
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }
