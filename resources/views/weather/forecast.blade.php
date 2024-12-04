@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto mt-6">
+    <div class="container mx-auto mt-6 mb-6">
         <h2 class="text-2xl font-bold mb-4">
             {{ \Carbon\Carbon::parse($selectedDay['date'])->format('l, F j, Y') }}
         </h2>
@@ -16,6 +16,7 @@
         </div>
 
         <!-- Forecast Rows -->
+
         <ul class="space-y-4">
             @foreach ($selectedDay['hour'] as $hour)
                 @if (\Carbon\Carbon::parse($hour['time'])->isFuture())

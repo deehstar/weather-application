@@ -23,7 +23,6 @@
             <div>
                 <img src="https:{{ $currentWeather['condition_icon'] }}" alt="Weather Icon" class="w-32 h-32">
             </div>
-
         </div>
 
         <!-- 7-Day Forecast Section -->
@@ -45,6 +44,10 @@
                 @endforeach
             </div>
         </div>
+        <a href="{{ route('weather.history', $currentLocation['name']) }}"
+            class="inline-block mt-4 px-6 py-3 bg-gray-800 text-white p-4 rounded-md shadow hover:bg-gray-200 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105">
+            Last 30 days in {{ $currentLocation['name'] }}
+        </a>
     </div>
 @endsection
 

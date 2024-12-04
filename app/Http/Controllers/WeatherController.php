@@ -24,11 +24,11 @@ class WeatherController extends Controller
         $forecastData = $this->weatherApiService->getForecast($city, 7);
 
         if (!$currentWeather || !$forecastData) {
-            return redirect()->route('weather.show', ['city' => 'Copenhagen'])
+            return redirect()->route('weather.home', ['city' => 'Copenhagen'])
                 ->with('error', 'Unable to fetch weather data.');
         }
 
-        return view('weather.show', compact('currentWeather', 'forecastData', 'currentLocation'));
+        return view('weather.home', compact('currentWeather', 'forecastData', 'currentLocation'));
 
     }
 
@@ -37,16 +37,31 @@ class WeatherController extends Controller
         $forecastData = $this->weatherApiService->getForecast($city, 7);
 
         if (!$forecastData) {
-            return redirect()->route('weather.show', ['city' => $city])->with('error', 'Unable to fetch weather data.');
+            return redirect()->route('weather.home', ['city' => $city])->with('error', 'Unable to fetch weather data.');
         }
-        //dd($forecastData);
+
         $selectedDay = collect($forecastData['forecast']['forecastday'])->firstWhere('date', $date);
 
         if (!$selectedDay) {
-            return redirect()->route('weather.show', ['city' => $city])->with('error', 'Date not found in forecast data.');
+            return redirect()->route('weather.home', ['city' => $city])->with('error', 'Date not found in forecast data.');
         }
-        //dd($selectedDay);
-        return view('weather.day', compact('forecastData', 'selectedDay', 'city'));
+
+        return view('weather.forecast', compact('forecastData', 'selectedDay', 'city'));
+    }
+
+    public function showHistoricalWeather($city)
+    {
+        $historicalWeather = $this->weatherApiService->getHistoricalWeather($city);
+
+        if (!$historicalWeather) {
+            return redirect()->route('weather.home', ['city' => $city])
+                ->with('error', 'Unable to fetch historical weather data.');
+        }
+        // Reverse the array of forecast days so that the most recent day is first
+        $reversedForecastDays = array_reverse($historicalWeather['forecast']['forecastday']);
+        $historicalWeather['forecast']['forecastday'] = $reversedForecastDays;
+
+        return view('weather.history', compact('historicalWeather', 'city'));
     }
 }
 
