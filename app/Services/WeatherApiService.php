@@ -10,6 +10,7 @@ class WeatherApiService
     protected $baseUrl;
     protected $apiKey;
 
+    // Base URL and API key are fetched from the config/services.php file, they key itself is stored in the .env file.
     public function __construct()
     {
         $this->baseUrl = config('services.weatherapi.url', env('WEATHER_API_URL'));
@@ -17,9 +18,10 @@ class WeatherApiService
     }
 
 
-
+    // Fetches the current weather data for a given location.
     public function getCurrentWeather($location)
     {
+        // Perform a GET request to fetch current weather data.
         $response = Http::withoutVerifying()->get("{$this->baseUrl}/current.json", [
             'key' => $this->apiKey,
             'q' => $location,
@@ -37,6 +39,7 @@ class WeatherApiService
         return null;
 
     }
+    // Perform a GET request to fetch forecast data.
     public function getForecast($location, $days = 1)
     {
         $response = Http::withoutVerifying()->get("{$this->baseUrl}/forecast.json", [
@@ -56,7 +59,7 @@ class WeatherApiService
 
         return null;
     }
-
+    // Perform a GET request to fetch weather data for the past 30 days
     public function getHistoricalWeather($location)
     {
         $response = Http::withoutVerifying()->get("{$this->baseUrl}/history.json", [

@@ -29,7 +29,6 @@ class WeatherController extends Controller
         }
 
         return view('weather.home', compact('currentWeather', 'forecastData', 'currentLocation'));
-
     }
 
     public function showDay($city, $date)
@@ -40,7 +39,7 @@ class WeatherController extends Controller
             return redirect()->route('weather.home', ['city' => $city])->with('error', 'Unable to fetch weather data.');
         }
 
-        $selectedDay = collect($forecastData['forecast']['forecastday'])->firstWhere('date', $date);
+        $selectedDay = $this->weatherService->getSelectedDayForecast($forecastData, $date);
 
         if (!$selectedDay) {
             return redirect()->route('weather.home', ['city' => $city])->with('error', 'Date not found in forecast data.');
@@ -57,11 +56,9 @@ class WeatherController extends Controller
             return redirect()->route('weather.home', ['city' => $city])
                 ->with('error', 'Unable to fetch historical weather data.');
         }
-        // Reverse the array of forecast days so that the most recent day is first
-        $reversedForecastDays = array_reverse($historicalWeather['forecast']['forecastday']);
-        $historicalWeather['forecast']['forecastday'] = $reversedForecastDays;
 
-        return view('weather.history', compact('historicalWeather', 'city'));
+        $processedHistoricalWeather = $this->weatherService->processHistoricalWeatherData($historicalWeather);
+
+        return view('weather.history', compact('processedHistoricalWeather', 'city'));
     }
 }
-

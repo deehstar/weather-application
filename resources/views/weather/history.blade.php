@@ -15,7 +15,7 @@
 
         <!-- Weather Data -->
         <ul class="space-y-4">
-            @foreach ($historicalWeather['forecast']['forecastday'] as $day)
+            @foreach ($processedHistoricalWeather['forecast']['forecastday'] as $day)
                 <li class="grid grid-cols-5 items-center p-4 rounded-lg shadow-lg bg-white">
                     <!-- Date -->
                     <div class="text-center">

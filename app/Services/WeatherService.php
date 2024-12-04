@@ -2,24 +2,12 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Log;
 use App\Models\Location;
 
 class WeatherService
 {
-    /**
-     * Create a new class instance.
-     */
-    protected $baseUrl;
-    protected $apiKey;
-
-    public function __construct()
-    {
-
-    }
-
     public function getLatestWeatherReadingFromDatabase(string $locationName)
     {
         $location = Location::where('name', $locationName)->first();
@@ -30,6 +18,7 @@ class WeatherService
 
         return null;
     }
+
     public function getLocationFromDatabase(string $locationName)
     {
         $location = Location::where('name', $locationName)->first();
@@ -41,4 +30,23 @@ class WeatherService
         return null;
     }
 
+    public function getSelectedDayForecast(array $forecastData, string $date)
+    {
+        $forecastDay = collect($forecastData['forecast']['forecastday'])->firstWhere('date', $date);
+
+        if (!$forecastDay) {
+            return null;
+        }
+
+        return $forecastDay;
+    }
+
+    public function processHistoricalWeatherData(array $historicalWeather)
+    {
+        if (isset($historicalWeather['forecast']['forecastday'])) {
+            $historicalWeather['forecast']['forecastday'] = array_reverse($historicalWeather['forecast']['forecastday']);
+        }
+
+        return $historicalWeather;
+    }
 }
