@@ -15,7 +15,7 @@ A simple weather application built with Laravel 11, which fetches real-time and 
 - PHP 8.1+
 - Composer
 - Laravel 11
-- MySQL or SQLite database
+- SQLite database
 - WeatherAPI account for API key
 
 ---
