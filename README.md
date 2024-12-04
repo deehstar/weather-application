@@ -39,6 +39,7 @@ A simple weather application built with Laravel 11, which fetches real-time and 
    ```
    WEATHER_API_KEY={Your-api-key}
    ```
+   - Save the .env file before the next step
 4. **Generate encryption key**
    ```bash
    php artisan key:generate
@@ -58,7 +59,7 @@ A simple weather application built with Laravel 11, which fetches real-time and 
   php artisan serve
   ```
 - **Start scheduler**
-  Open another terminal and run
+   - Open another terminal and run
   ```bash
   php artisan schedule:work
   ```
