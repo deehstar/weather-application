@@ -59,7 +59,7 @@ A simple weather application built with Laravel 11, which fetches real-time and 
   php artisan serve
   ```
 - **Start scheduler**
-   - Open another terminal and run
+  Open another terminal and run
   ```bash
   php artisan schedule:work
   ```
