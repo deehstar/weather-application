@@ -9,12 +9,6 @@ A simple weather application built with Laravel 11, which fetches real-time and 
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
-  - [Fetching Data](#fetching-data)
-  - [Starting the Server](#starting-the-server)
-  - [Automatic Updates](#automatic-updates)
-- [Features](#features)
-- [Tests](#tests)
-
 ---
 
 ## **Requirements**
